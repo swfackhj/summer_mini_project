@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:rive/components.dart';
 import 'package:rive/rive.dart';
@@ -26,11 +28,12 @@ class PlayerController extends GetxController {
     });
     fire = cont.findInput<bool>('fire') as SMITrigger;
     right = cont.findInput<bool>('facingRight') as SMIBool;
-    rotate(3.14);
+    rotate(pi);
   }
 
   void shoot() async {
     isShooted = true;
+    fire?.fire();
     update();
   }
 
@@ -59,8 +62,8 @@ class PlayerController extends GetxController {
   void rotate(double rotation) {
     this.rotation = rotation;
     var val = rotation;
-    if (rotation > 3.14 / 2) {
-      val = 3.14 - rotation;
+    if (rotation > pi / 2) {
+      val = pi - rotation;
       if (!right!.value) {
         turn();
       }
