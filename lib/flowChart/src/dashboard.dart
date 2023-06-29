@@ -246,4 +246,8 @@ class Dashboard extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void update(){
+    notifyListeners();
+  }
 }

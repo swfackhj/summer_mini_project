@@ -4,7 +4,6 @@ import 'package:flame_game/controller/player_controller.dart';
 import 'package:flame_game/flowChart/flutter_flow_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 
 class CodingWidget extends StatelessWidget {
   final playerController = Get.put(PlayerController());
@@ -37,20 +36,6 @@ class CodingWidget extends StatelessWidget {
                           onElementPressed: codeController.onPressed,
                         ),
                       ),
-                      // Obx(()=>Positioned(
-                      //       left: -uiController.x.value,
-                      //       top: -uiController.y.value,
-                      //       child: SizedBox(
-                      //         width: 100,
-                      //         height: 100,
-                      //         child: DecoratedBox(
-                      //           decoration: BoxDecoration(
-                      //               color: Colors.blue
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     )
-                      // ),
                     ],
                   ),
                 ),
