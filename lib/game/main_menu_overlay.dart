@@ -29,47 +29,41 @@ class _MainMenuOverlayState extends State<MainMenuOverlay> {
       }
 
       return Material(
-          color: Colors.transparent,
-          child: Opacity(
-            opacity: backOpacity,
-            child: Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Container(
-                color: Theme.of(context).colorScheme.background,
-                child: Center(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const Text(
-                          '2D 슈팅게임',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(
-                          height: 100,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              if (game.gameManager.currentState ==
-                                  GameState.intro) {
-                                game.startGame();
-                              } else if (game.gameManager.currentState ==
-                                  GameState.pause) {
-                                game.pauseAndresumeGame();
-                              }
-                            },
-                            child: Text(
-                              buttonStr,
-                              style: const TextStyle(fontSize: 15),
-                            )),
-                      ],
-                    ),
-                  ),
+          child: Container(
+        color: Colors.black,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Text(
+                  'Fortress Game',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
-              ),
+                const SizedBox(
+                  height: 100,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      if (game.gameManager.currentState == GameState.intro) {
+                        game.startGame();
+                      } else if (game.gameManager.currentState ==
+                          GameState.pause) {
+                        game.pauseAndresumeGame();
+                      }
+                    },
+                    child: Text(
+                      buttonStr,
+                      style: const TextStyle(fontSize: 15),
+                    )),
+              ],
             ),
-          ));
+          ),
+        ),
+      ));
     });
   }
 }

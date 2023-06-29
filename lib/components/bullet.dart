@@ -1,13 +1,21 @@
+import 'dart:math';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_game/components/enemy.dart';
+import 'package:flame_game/controller/player_controller.dart';
+import 'package:get/get.dart';
 
-class Bullet extends PositionComponent
-    with CollisionCallbacks {
-  final double _speed = 800;
+class Bullet extends PositionComponent with CollisionCallbacks {
+  final double _speed = 500;
 
-  Bullet() {
+  double time = 0;
+  double rad;
+
+  final controller = Get.put(PlayerController());
+
+  Bullet({required this.rad}) {
     var bulletsSprites = Flame.images.fromCache("Bullets.png");
     var bullet01 = SpriteComponent.fromImage(bulletsSprites,
         srcPosition: Vector2(3, 0), srcSize: Vector2(4, 7));
@@ -52,8 +60,13 @@ class Bullet extends PositionComponent
   @override
   void update(double dt) {
     super.update(dt);
+    time += dt;
 
-    position.y -= dt * _speed;
+    var xValue = 20 * cos(rad);
+    var yValue = 20 * sin(rad) - 9.8 * time;
+
+    position.x -= xValue * time;
+    position.y -= (yValue * time - 0.5 * 9.8 * time * time);
 
     // 스크린 범위 밖으로 나가면 객체 제거
     if (position.y < 0) {

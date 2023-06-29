@@ -1,15 +1,19 @@
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:flame_game/coding/coding.dart';
 import 'package:flame_game/game/game_over_overlay.dart';
 import 'package:flame_game/game/game_overlay.dart';
 import 'package:flame_game/game/main_menu_overlay.dart';
 import 'package:flame_game/game/my_game.dart';
 import 'package:flutter/material.dart';
+import 'dart:js' as js;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Flame.device.fullScreen();
+
+  js.context.callMethod('resizeTo', [300, 300]);
 
   // 이미지 로드
   await Flame.images.loadAll([
@@ -21,20 +25,7 @@ void main() async {
     "Items.png",
   ]);
 
-  // runApp(MaterialApp(
-  //   title: 'Flame Game',
-  //   home: GestureDetector(
-  //     child: Scaffold(
-  //       body: GameWrapper(MyGame()),
-  //     ),
-  //   ),
-  // ));
-
-  runApp(MaterialApp(
-    title: 'Flame Game',
-    debugShowCheckedModeBanner: false,
-    home: GameWrapper(MyGame()),
-  ));
+  runApp(MaterialApp(home: GameWrapper(MyGame())));
 }
 
 class GameWrapper extends StatelessWidget {
@@ -43,14 +34,24 @@ class GameWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GameWidget(
-      game: myGame,
-      // overlay 위젯 등록
-      overlayBuilderMap: <String, Widget Function(BuildContext, Game)>{
-        'gameOverlay': (context, game) => GameOverlay(game),
-        'mainMenuOverlay': (context, game) => MainMenuOverlay(game),
-        'gameOverOverlay': (context, game) => GameOverOverlay(game),
-      },
+    return Row(
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.7,
+          child: GameWidget(
+            game: myGame,
+            // overlay 위젯 등록
+            overlayBuilderMap: <String, Widget Function(BuildContext, Game)>{
+              'gameOverlay': (context, game) => GameOverlay(game),
+              'mainMenuOverlay': (context, game) => MainMenuOverlay(game),
+              'gameOverOverlay': (context, game) => GameOverOverlay(game),
+            },
+          ),
+        ),
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.3,
+            child: CodingWidget())
+      ],
     );
   }
 }

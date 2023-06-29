@@ -1,7 +1,8 @@
 import 'package:flame/game.dart';
-import 'package:flame_game/game/my_game.dart';
+import 'package:flame_game/controller/player_controller.dart';
 import 'package:flame_game/game/score_display.dart';
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 
 class GameOverlay extends StatefulWidget {
   final Game game;
@@ -13,6 +14,7 @@ class GameOverlay extends StatefulWidget {
 }
 
 class _GameOverlayState extends State<GameOverlay> {
+  final playerController = Get.put(PlayerController());
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -25,7 +27,10 @@ class _GameOverlayState extends State<GameOverlay> {
             children: [
               ScoreDisplay(game: widget.game),
               ElevatedButton(
-                onPressed: () => (widget.game as MyGame).pauseAndresumeGame(),
+                onPressed: () {
+                  playerController.shoot();
+                  // (widget.game as MyGame).pauseAndresumeGame();
+                },
                 child: const Icon(
                   Icons.pause,
                   size: 30,
