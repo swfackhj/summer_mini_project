@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>739089643859-0s9qamlii2aqnc68o47ct2v53foq3mq9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.739089643859-0s9qamlii2aqnc68o47ct2v53foq3mq9</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDOfDxH_6nh9WJm1OuN06DhtJ_pa72V4zo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>739089643859</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.flameGame</string>
+	<key>PROJECT_ID</key>
+	<string>swfact-summer-mini-project</string>
+	<key>STORAGE_BUCKET</key>
+	<string>swfact-summer-mini-project.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:739089643859:ios:e542eda04d2fb30adac9a6</string>
+</dict>
+</plist>

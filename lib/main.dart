@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame_game/coding/coding.dart';
+import 'package:flame_game/firebase_options.dart';
 import 'package:flame_game/game/game_over_overlay.dart';
 import 'package:flame_game/game/game_overlay.dart';
 import 'package:flame_game/game/main_menu_overlay.dart';
@@ -8,8 +10,12 @@ import 'package:flame_game/game/my_game.dart';
 import 'package:flutter/material.dart';
 import 'dart:js' as js;
 
+import 'package:get/route_manager.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   await Flame.device.fullScreen();
 
@@ -26,7 +32,7 @@ void main() async {
     "Items.png",
   ]);
 
-  runApp(MaterialApp(home: GameWrapper(MyGame())));
+  runApp(GetMaterialApp(home: GameWrapper(MyGame())));
 }
 
 class GameWrapper extends StatelessWidget {
