@@ -143,10 +143,10 @@ class CodeController extends GetxController {
 
   void addValueCondition(){
     final ee = ValueConditionElement(
-      boolFunc: (valueKey){
-        DataRepository.getData(valueKey);
-        return true;
-      }
+      // boolFunc: (valueKey1, valueKey2){
+      //   DataRepository.getData(valueKey);
+      //   return true;
+      // }
     );
     dashboard.addElement(ee);
   }

@@ -11,7 +11,6 @@ import 'package:flame_game/managers/item_manager.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
-import 'package:rive/components.dart';
 
 class MyGame extends FlameGame
     with HasTappableComponents, HasDraggableComponents, HasCollisionDetection {
