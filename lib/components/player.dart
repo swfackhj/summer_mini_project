@@ -71,7 +71,6 @@ class Player extends RiveComponent
 
   void destroy() {
     removeFromParent();
-    gameRef.gameOver();
   }
 }
 

@@ -80,6 +80,7 @@ class MyGame extends FlameGame
     });
 
     Player playerComponent = Player(playerArtboard: playerArtboard);
+    playerController.setBeforeX(playerComponent.x);
     playerController.setPlayer(playerComponent);
     playerController.setPosition(playerComponent.x, playerComponent.y);
     playerController.rotate(3.14);
@@ -112,12 +113,14 @@ class MyGame extends FlameGame
 
   void singOut() async {
     await FirebaseAuth.instance.signOut();
-    overlays.remove('mainMenuOverlay');
-    overlays.add('mainMenuOverlay');
+    playerController.playerComponent!.destroy();
     _enemyManager.destroy();
     _itemManager.destroy();
     _gameManager.reset();
+    overlays.remove('mainMenuOverlay');
+    overlays.add('mainMenuOverlay');
     _gameManager.changeState(GameState.singOut);
+    print(_gameManager.currentState);
   }
 
   void gameOver({bool isLastBoss = false}) {

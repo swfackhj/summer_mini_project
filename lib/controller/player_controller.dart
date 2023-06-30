@@ -23,23 +23,6 @@ class PlayerController extends GetxController {
     update();
   }
 
-  void playerInit(Artboard board) {
-    final cont = StateMachineController.fromArtboard(board, 'State Machine 1',
-        onStateChange: onChange);
-    board.addController(cont!);
-    board.forEachComponent((p0) {
-      // print(p0.name);
-      if (p0.name == 'canon') {
-        node = p0 as Node;
-        node!.rotation = 0;
-        // print(shape.rotation);
-      }
-    });
-    fire = cont.findInput<bool>('fire') as SMITrigger;
-    right = cont.findInput<bool>('facingRight') as SMIBool;
-    rotate(pi);
-  }
-
   void shoot() async {
     isShooted = true;
     fire?.fire();
