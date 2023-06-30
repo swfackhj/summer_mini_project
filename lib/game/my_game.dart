@@ -69,20 +69,17 @@ class MyGame extends FlameGame
         onStateChange: playerController.onChange);
 
     playerArtboard.addController(controller!);
-    playerArtboard.forEachComponent((p0) {
-      if (p0.name == 'canon') {
-        playerController.node = p0 as Node;
-        playerController.node!.rotation = 0;
-      }
-      playerController.fire = controller.findInput<bool>('fire') as SMITrigger;
-      playerController.right =
-          controller.findInput<bool>('facingRight') as SMIBool;
-    });
+    playerController.fire = controller.findInput<bool>('fire') as SMITrigger;
+    playerController.forward = controller.findInput<bool>('forward') as SMIBool;
+    playerController.moving = controller.findInput<bool>('moving') as SMIBool;
+    playerController.rot = controller.findInput<double>('rotation') as SMINumber;
 
     Player playerComponent = Player(playerArtboard: playerArtboard);
     playerController.setPlayer(playerComponent);
     playerController.setPosition(playerComponent.x, playerComponent.y);
-    playerController.rotate(3.14);
+    playerController.rotate(180);
+    playerController.moving?.value = false;
+    playerController.forward?.value = true;
 
     playerComponent.position.x += 100;
     add(playerController.playerComponent!);
