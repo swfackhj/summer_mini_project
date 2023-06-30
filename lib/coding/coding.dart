@@ -19,11 +19,10 @@ class CodingWidget extends StatelessWidget {
         children:[
           Positioned.fill(
             child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
               controller: uiController.vert.value,
               child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
                 controller: uiController.hori.value,
+                scrollDirection: Axis.horizontal,
                 child: SizedBox(
                   width: 1000,
                   height: 1000,
@@ -40,7 +39,7 @@ class CodingWidget extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+            )
           ),
           Obx(()=> uiController.addOn.value? Positioned(
             top: 0,
@@ -49,11 +48,24 @@ class CodingWidget extends StatelessWidget {
               width: 100,
               child: Column(
                 children: [
+                  const SizedBox(height: 10,),
                   ElevatedButton(onPressed: codeController.addFire, child: const Text('fire')),
                   const SizedBox(height: 10,),
                   ElevatedButton(onPressed: codeController.addMoveRight, child: const Text('move right')),
                   const SizedBox(height: 10,),
                   ElevatedButton(onPressed: codeController.addRotateUp, child: const Text('rotate up')),
+                  const SizedBox(height: 10,),
+                  ElevatedButton(onPressed: codeController.addCanonValue, child: const Text('value')),
+                  const SizedBox(height: 10,),
+                  ElevatedButton(onPressed: codeController.addVal2, child: const Text('value2')),
+                  const SizedBox(height: 10,),
+                  ElevatedButton(onPressed: codeController.addVal3, child: const Text('value3')),
+                  const SizedBox(height: 10,),
+                  ElevatedButton(onPressed: codeController.addValueCondition, child: const Text('condition')),
+                  const SizedBox(height: 10,),
+                  ElevatedButton(onPressed: codeController.addData, child: const Text('operation')),
+                  const SizedBox(height: 10,),
+                  ElevatedButton(onPressed: codeController.addPrint, child: const Text('print')),
                 ],
               ),
             ),
@@ -61,12 +73,11 @@ class CodingWidget extends StatelessWidget {
           Positioned(
             bottom: 15,
             left: 15,
-            child: FloatingActionButton(
-              onPressed: (){
-                codeController.runFlow();
-              },
+            child: Obx(()=>FloatingActionButton(
+              onPressed: codeController.isRunning.value ? null : () => codeController.runFlow(),
+              backgroundColor: codeController.isRunning.value ? Colors.grey : Colors.blue,
               child: const Icon(Icons.play_arrow),
-            ),
+            )),
           )
         ],
       ),

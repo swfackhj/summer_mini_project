@@ -4,8 +4,10 @@ import 'package:flame_game/flowChart/flutter_flow_chart.dart';
 class ActionElement extends AlgorithmFlowElement{
   ActionElement( {
     void Function(Dashboard)? callback,
-    String? text
+    String? text,
+    Offset? position,
   }) : super(
+    position: position,
     kind: ElementKind.rectangle,
     callback: callback,
     backgroundColor: Colors.blue[300],
