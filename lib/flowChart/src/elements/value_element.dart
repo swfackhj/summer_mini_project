@@ -9,8 +9,10 @@ class ValueElement extends AlgorithmFlowElement{
   final String valueKey;
 
   ValueElement({
-    required this.valueKey
+    required this.valueKey,
+    Offset? position,
   }):super(
+    position: position,
     text: valueKey,
     size: const Size(50, 30),
     kind: ElementKind.rectangle,
@@ -26,41 +28,68 @@ class ValueElement extends AlgorithmFlowElement{
 
   @override
   void Function(BuildContext context, Offset offset) get onTap => (context, offset){
+    final val = DataRepository.getData(valueKey);
+    if(val is String){
+      in2.clear();
+      in1.text = val;
+    }else if (val is num){
+      in1.clear();
+      in2.text = val.toString();
+    }
+
     showMenu(
       context: context,
       position: RelativeRect.fromLTRB(offset.dx, offset.dy, offset.dx, offset.dy),
       items: [
         PopupMenuItem(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          height: 20,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              const Text('텍스트', style: TextStyle(fontSize: 12),),
               SizedBox(
-                width: 100,
+                width: 80,
                 child: TextField(
                   controller: in1,
+                  style: const TextStyle(fontSize: 12, height: 1),
+                  decoration: const InputDecoration(
+                    isDense: true
+                  ),
                 ),
               ),
               TextButton(onPressed: (){
                 DataRepository.setData(valueKey, in1.text);
-              }, child: const Text('완료'))
+                Navigator.pop(context);
+              }, child: const Text('완료', style: TextStyle(fontSize: 12),))
             ],
           ),
         ),
         PopupMenuItem(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          height: 20,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              const Text('숫 자', style: TextStyle(fontSize: 12),),
               SizedBox(
-                width: 100,
+                width: 80,
                 child: TextField(
                   controller: in2,
                   inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly
+                    FilteringTextInputFormatter.digitsOnly,
                   ],
                   keyboardType: TextInputType.number,
+                  style: const TextStyle(fontSize: 12),
+                  decoration: const InputDecoration(
+                    isDense: true
+                  ),
                 ),
               ),
               TextButton(onPressed: (){
-                DataRepository.setData(valueKey, int.parse(in2.text));
-              }, child: const Text('완료'))
+                DataRepository.setData(valueKey, num.parse(in2.text));
+                Navigator.pop(context);
+              }, child: const Text('완료', style: TextStyle(fontSize: 12),))
             ],
           ),
         ),

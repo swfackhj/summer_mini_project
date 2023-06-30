@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flame_game/flowChart/flutter_flow_chart.dart';
 
 class StartElement extends AlgorithmFlowElement{
-  StartElement({Offset position = const Offset(100,100)}):super(
+  StartElement({
+    Offset position = const Offset(100,100),
+    dynamic Function(Dashboard board)? callback,
+  }):super(
+    callback: callback,
       text: 'Start',
       size: const Size(30, 30),
       position: position,
@@ -18,7 +22,10 @@ class StartElement extends AlgorithmFlowElement{
 }
 
 class EndElement extends AlgorithmFlowElement{
-  EndElement():super(
+  EndElement({
+    dynamic Function(Dashboard board)? callback,
+  }):super(
+      callback: callback,
       text: 'End',
       size: const Size(50, 30),
       kind: ElementKind.rectangle,

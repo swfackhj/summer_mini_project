@@ -1,19 +1,26 @@
-import 'package:flutter/material.dart';
 import 'package:flame_game/flowChart/flutter_flow_chart.dart';
+import 'package:flutter/material.dart';
 
-class ValueActionElement extends ActionElement{
+enum Comparison {
+  equal,
+  greater,
+  lesser,
+
+}
+
+class ValueConditionElement extends ConditionElement{
   String? valueKey;
-  dynamic Function(String valueKey)? valuedCallback;
+  bool Function(String valueKey) valuedBoolFunc;
 
-  ValueActionElement({
-    dynamic Function(String valueKey)? callback,
-    String? text,
-    Offset? position,
+  ValueConditionElement({
+    String? text = 'if _ cond',
+    required bool Function(String valueKey) boolFunc,
+    Offset? position
   }):
-  valuedCallback = callback,
+  valuedBoolFunc = boolFunc,
   super(
     position: position,
-    text: text
+    boolFunc: ()=>true,
   );
 
   @override
@@ -26,7 +33,7 @@ class ValueActionElement extends ActionElement{
           PopupMenuItem(
             height: 20,
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            child: Text(str, style: const TextStyle(fontSize: 12),),
+            child: Text(str, style: const TextStyle(fontSize: 15),),
             onTap: (){
               valueKey = str;
             },
@@ -36,9 +43,10 @@ class ValueActionElement extends ActionElement{
   };
 
   @override
-  void Function(Dashboard board) get callback => (board){
+  bool Function() get boolFunc=>(){
     if(valueKey!=null){
-      valuedCallback?.call(valueKey!);
+      return valuedBoolFunc.call(valueKey!);
     }
+    return true;
   };
 }

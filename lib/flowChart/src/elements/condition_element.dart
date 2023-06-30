@@ -5,9 +5,12 @@ class ConditionElement extends AlgorithmFlowElement{
   bool Function() boolFunc;
   ConditionElement({
     required this.boolFunc,
+    String text = 'if',
+    Offset? position,
   }): super(
+    position: position,
     kind: ElementKind.diamond,
-    text: 'if',
+    text: text,
     backgroundColor: Colors.green[300],
     size: const Size(50, 30),
     handlers: const [

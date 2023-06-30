@@ -17,6 +17,7 @@ void main() async {
 
   // 이미지 로드
   await Flame.images.loadAll([
+    "Background_.png",
     "Backgrounds.png",
     "Background_Grid.png",
     "Player.png",
