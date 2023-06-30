@@ -96,6 +96,7 @@ class CodeController extends GetxController {
           Get.find<PlayerController>().setBeforeX(
               Get.find<PlayerController>().playerComponent!.position.x);
           Get.find<PlayerController>().setIsMoved(true);
+          await Future.delayed(const Duration(seconds: 1));
         },
         text: 'Move Right');
     dashboard.addElement(ee);
@@ -103,10 +104,19 @@ class CodeController extends GetxController {
 
   void addRotateUp() {
     final ee = ActionElement(
-        callback: (_) {
-          Get.find<PlayerController>().rotate(135);
+        callback: (_) async {
+          await Get.find<PlayerController>().rotate(135);
         },
         text: 'Rotate Up');
+    dashboard.addElement(ee);
+  }
+
+  void addRotateDown() {
+    final ee = ActionElement(
+        callback: (_) {
+          Get.find<PlayerController>().rotate(180);
+        },
+        text: 'Rotate Down');
     dashboard.addElement(ee);
   }
 

@@ -17,20 +17,12 @@ class Bullet extends PositionComponent with CollisionCallbacks {
 
   Bullet({required this.rad}) {
     var bulletsSprites = Flame.images.fromCache("Bullets.png");
-    var bullet01 = SpriteComponent.fromImage(bulletsSprites,
-        srcPosition: Vector2(3, 0), srcSize: Vector2(4, 7));
     var bullet02 = SpriteComponent.fromImage(bulletsSprites,
         srcPosition: Vector2(12, 0), srcSize: Vector2(11, 11));
-    var bullet03 = SpriteComponent.fromImage(bulletsSprites,
-        srcPosition: Vector2(3, 0), srcSize: Vector2(4, 7));
 
-    bullet01.position = Vector2(0, 0);
     bullet02.position = Vector2(6, 0);
-    bullet03.position = Vector2(17, 0);
 
-    add(bullet01);
     add(bullet02);
-    add(bullet03);
   }
 
   @override
@@ -62,8 +54,8 @@ class Bullet extends PositionComponent with CollisionCallbacks {
     super.update(dt);
     time += dt;
 
-    var xValue = 20 * cos(rad);
-    var yValue = 20 * sin(rad) - 9.8 * time;
+    var xValue = 30 * cos(rad);
+    var yValue = 30 * sin(rad) - 9.8 * time;
 
     position.x -= xValue * time;
     position.y -= (yValue * time - 0.5 * 9.8 * time * time);

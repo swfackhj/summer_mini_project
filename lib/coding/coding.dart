@@ -55,6 +55,8 @@ class CodingWidget extends StatelessWidget {
                   const SizedBox(height: 10,),
                   ElevatedButton(onPressed: codeController.addRotateUp, child: const Text('rotate up')),
                   const SizedBox(height: 10,),
+                  ElevatedButton(onPressed: codeController.addRotateDown, child: const Text('rotate down')),
+                  const SizedBox(height: 10,),
                   ElevatedButton(onPressed: codeController.addCanonValue, child: const Text('value')),
                   const SizedBox(height: 10,),
                   ElevatedButton(onPressed: codeController.addVal2, child: const Text('value2')),

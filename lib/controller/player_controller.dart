@@ -51,8 +51,12 @@ class PlayerController extends GetxController {
     update();
   }
 
-  void rotate(double rotation) {
-    rot?.value = rotation;
+  Future<void> rotate(double rotation) async {
+    final step = (rotation-rot!.value)/50.0;
+    for(int i = 0; i<50; i++){
+      rot!.value = rot!.value+step;
+      await Future.delayed(const Duration(milliseconds: 10));
+    }
     update();
   }
 

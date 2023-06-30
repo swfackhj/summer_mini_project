@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
@@ -50,12 +52,13 @@ class Player extends RiveComponent
     }
 
     if (playerController.isShooted == true) {
-      Bullet bullet = Bullet(rad: 2)
+      final rad = playerController.rot!.value/180.0*pi;
+      Bullet bullet = Bullet(rad: rad)
         // Bullet의 사이즈 설정
-        ..size = Vector2(19, 25)
+        ..size = Vector2(19, 19)
         // Bullet의 위치 설정
         ..position = Vector2(
-            Singleton().screenSize!.x * 0.1, Singleton().screenSize!.y - 140)
+            playerController.playerComponent!.x+100-75*cos(rad), playerController.playerComponent!.y+80-75*sin(rad))
         // Bullet의 기준점 설정
         ..anchor = Anchor.center;
       gameRef.add(bullet);
