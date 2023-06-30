@@ -9,8 +9,8 @@ class Background extends PositionComponent {
   double get backgroundY => _background.y;
 
   Background(Image spriteImg, Vector2 postion) {
-    _background = BackgroundComponent(
-        spriteImg, Vector2(0, 0), Vector2(935, 512), postion);
+    _background = BackgroundComponent(spriteImg, Vector2(0, 0),
+        spriteImg.size, postion);
     add(_background);
   }
 
@@ -26,8 +26,8 @@ class BackgroundComponent extends SpriteComponent {
       : super.fromImage(backgroundImag,
             srcPosition: srcPosition,
             srcSize: srcSize,
-            position: postion,
+            position: postion - Vector2((Singleton().screenSize!.y * srcSize.x/srcSize.y - Singleton().screenSize!.x)/2.0,0),
             // 배경 이미지 사이즈를 전체 화면 세로 사이즈의 두배로 설정
             size: Vector2(
-                Singleton().screenSize!.x, Singleton().screenSize!.y * 2));
+                Singleton().screenSize!.y * srcSize.x/srcSize.y, Singleton().screenSize!.y));
 }

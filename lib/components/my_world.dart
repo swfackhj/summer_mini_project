@@ -7,8 +7,8 @@ class MyWorld extends Component with HasGameRef<MyGame> {
 
   @override
   Future<void> onLoad() async {
-    var background = gameRef.images.fromCache("Backgrounds.png");
-    _background = Background(background, Vector2(0, -gameRef.size.y));
+    var background = gameRef.images.fromCache("Background_.png");
+    _background = Background(background, Vector2(0, 0));
     add(_background);
   }
 }

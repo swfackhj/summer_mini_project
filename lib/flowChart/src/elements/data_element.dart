@@ -4,12 +4,15 @@ import 'package:flame_game/flowChart/flutter_flow_chart.dart';
 import 'value_element.dart';
 
 enum Operation{
-  set,
-  add,
-  sub,
-  mul,
-  div,
-  mod,
+  set('='),
+  add('+'),
+  sub('-'),
+  mul('×'),
+  div('÷'),
+  mod('%');
+
+  final String text;
+  const Operation(this.text);
 }
 
 class DataElement extends AlgorithmFlowElement{
@@ -19,8 +22,10 @@ class DataElement extends AlgorithmFlowElement{
   dynamic resultBuffer;
 
   DataElement({
-    dynamic Function(Dashboard board)? callback
+    dynamic Function(Dashboard board)? callback,
+    Offset? position,
   }): super(
+    position: position,
     callback: callback,
     text: 'Data',
     kind: ElementKind.parallelogram,
@@ -101,9 +106,13 @@ class DataElement extends AlgorithmFlowElement{
         position: RelativeRect.fromLTRB(offset.dx, offset.dy, offset.dx, offset.dy),
         items: [
           for(Operation op in Operation.values)
-            PopupMenuItem(child: Text(op.name),onTap: (){
-              operation = op;
-              setText(op.name);
+            PopupMenuItem(
+              height: 20,
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              child: Text(op.text),
+              onTap: (){
+                operation = op;
+                setText(op.name);
             },)
         ]
     );

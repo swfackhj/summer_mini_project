@@ -2,20 +2,35 @@ import 'dart:math';
 
 import 'package:flame_game/controller/player_controller.dart';
 import 'package:flame_game/flowChart/flutter_flow_chart.dart';
+import 'package:flame_game/flowChart/src/elements/value_condition_element.dart';
+import 'package:flame_game/flowChart/src/elements/value_element.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CodeController extends GetxController {
   final dashboard = Dashboard();
 
-  final startElement = StartElement();
-  final endElement = EndElement();
+  late StartElement startElement;
+  late EndElement endElement;
 
   RxBool isRunning = false.obs;
 
   @override
   void onInit() {
     super.onInit();
+
+    endElement = EndElement(
+      callback: (_){
+        isRunning.value = false;
+      }
+    );
+
+    startElement = StartElement(
+      callback: (_){
+        isRunning.value = true;
+      }
+    );
+
     dashboard.addElement(startElement);
     dashboard.addElement(endElement);
   }
@@ -88,6 +103,52 @@ class CodeController extends GetxController {
           Get.find<PlayerController>().rotate(pi - pi / 4);
         },
         text: 'Rotate Up');
+    dashboard.addElement(ee);
+  }
+
+  void addCanonValue(){
+    final ee = ValueElement(
+      valueKey: 'Canon'
+    );
+    dashboard.addElement(ee);
+  }
+
+  void addVal2(){
+    final ee = ValueElement(
+        valueKey: 'val2'
+    );
+    dashboard.addElement(ee);
+  }
+
+  void addVal3(){
+    final ee = ValueElement(
+        valueKey: 'val3'
+    );
+    dashboard.addElement(ee);
+  }
+
+  void addValueCondition(){
+    final ee = ValueConditionElement(
+      boolFunc: (valueKey){
+        DataRepository.getData(valueKey);
+        return true;
+      }
+    );
+    dashboard.addElement(ee);
+  }
+
+  void addData(){
+    final ee = DataElement();
+    dashboard.addElement(ee);
+  }
+
+  void addPrint(){
+    final ee = ValueActionElement(
+      text: 'print',
+      callback: (valueKey){
+        print(DataRepository.getData(valueKey));
+      }
+    );
     dashboard.addElement(ee);
   }
 }

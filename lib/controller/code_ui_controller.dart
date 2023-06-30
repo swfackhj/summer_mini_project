@@ -10,22 +10,15 @@ class CodeUIController extends GetxController{
 
   RxBool addOn = false.obs;
 
-  RxDouble x = .0.obs;
-  RxDouble y = .0.obs;
-
   @override
   void onInit() {
     super.onInit();
     print(codeCtrl.dashboard.dashboardPosition);
     hori.value.addListener(() {
-      codeCtrl.dashboard.setDashboardPosition(Offset(-hori.value.offset,-vert.value.offset));
-      x.value = codeCtrl.dashboard.dashboardPosition.dx;
-      y.value = codeCtrl.dashboard.dashboardPosition.dy;
+      codeCtrl.dashboard.update();
     });
     vert.value.addListener(() {
-      codeCtrl.dashboard.setDashboardPosition(Offset(-hori.value.offset,-vert.value.offset));
-      x.value = codeCtrl.dashboard.dashboardPosition.dx;
-      y.value = codeCtrl.dashboard.dashboardPosition.dy;
+      codeCtrl.dashboard.update();
     });
   }
 }
