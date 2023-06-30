@@ -9,8 +9,8 @@ class Background extends PositionComponent {
   double get backgroundY => _background.y;
 
   Background(Image spriteImg, Vector2 postion) {
-    _background = BackgroundComponent(spriteImg, Vector2(0, 0),
-        Vector2(Singleton().screenSize!.x * 0.7, 512), postion);
+    _background = BackgroundComponent(
+        spriteImg, Vector2(0, 0), Vector2(935, 512), postion);
     add(_background);
   }
 

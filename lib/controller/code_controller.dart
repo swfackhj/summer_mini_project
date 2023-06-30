@@ -5,7 +5,7 @@ import 'package:flame_game/flowChart/flutter_flow_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CodeController extends GetxController{
+class CodeController extends GetxController {
   final dashboard = Dashboard();
 
   final startElement = StartElement();
@@ -20,10 +20,11 @@ class CodeController extends GetxController{
     dashboard.addElement(endElement);
   }
 
-  void onLongPressed(BuildContext context, Offset offset, FlowElement element){
+  void onLongPressed(BuildContext context, Offset offset, FlowElement element) {
     showMenu(
         context: context,
-        position: RelativeRect.fromLTRB(offset.dx, offset.dy, offset.dx, offset.dy),
+        position:
+            RelativeRect.fromLTRB(offset.dx, offset.dy, offset.dx, offset.dy),
         color: Colors.transparent,
         elevation: 0,
         items: [
@@ -31,23 +32,22 @@ class CodeController extends GetxController{
             child: FloatingActionButton(
               mini: true,
               child: const Icon(Icons.delete),
-              onPressed: (){
+              onPressed: () {
                 dashboard.removeElement(element);
                 Navigator.pop(context);
               },
             ),
           )
-        ]
-    );
+        ]);
   }
 
-  void onPressed(BuildContext context, Offset offset, FlowElement element){
-    if(element is AlgorithmFlowElement){
-      element.onTap?.call(context,offset);
+  void onPressed(BuildContext context, Offset offset, FlowElement element) {
+    if (element is AlgorithmFlowElement) {
+      element.onTap?.call(context, offset);
     }
   }
 
-  void runFlow(){
+  void runFlow() {
     print("============");
     _loop(startElement);
   }
@@ -56,40 +56,38 @@ class CodeController extends GetxController{
     print(element.text);
     await element.callback?.call(dashboard);
     await Future.delayed(const Duration(milliseconds: 600));
-    for(var nextE in dashboard.getNextOf(element)){
+    for (var nextE in dashboard.getNextOf(element)) {
       _loop(nextE);
     }
   }
 
-  void addFire(){
+  void addFire() {
     final ee = ActionElement(
-      callback: (_) async {
-        Get.find<PlayerController>().shoot();
-        await Future.delayed(const Duration(milliseconds: 500));
-      },
-      text: 'Fire'
-    );
-    dashboard.addElement(ee);
-  }
-
-  void addMoveRight(){
-    final ee = ActionElement(
-      callback: (_){
-        Get.find<PlayerController>().x += 10;
-        Get.find<PlayerController>().update();
-      },
-      text: 'Move Right'
-    );
-    dashboard.addElement(ee);
-  }
-
-  void addRotateUp(){
-    final ee = ActionElement(
-        callback: (_){
-          Get.find<PlayerController>().rotate(pi - pi/4);
+        callback: (_) async {
+          Get.find<PlayerController>().shoot();
+          await Future.delayed(const Duration(milliseconds: 500));
         },
-        text: 'Rotate Up'
-    );
+        text: 'Fire');
+    dashboard.addElement(ee);
+  }
+
+  void addMoveRight() {
+    final ee = ActionElement(
+        callback: (_) async {
+          Get.find<PlayerController>().setBeforeX(
+              Get.find<PlayerController>().playerComponent!.position.x);
+          Get.find<PlayerController>().setIsMoved(true);
+        },
+        text: 'Move Right');
+    dashboard.addElement(ee);
+  }
+
+  void addRotateUp() {
+    final ee = ActionElement(
+        callback: (_) {
+          Get.find<PlayerController>().rotate(pi - pi / 4);
+        },
+        text: 'Rotate Up');
     dashboard.addElement(ee);
   }
 }

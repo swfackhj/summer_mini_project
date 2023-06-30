@@ -22,7 +22,7 @@ class Player extends RiveComponent
       : super(
             artboard: playerArtboard,
             size: Vector2.all(200),
-            position: Vector2(Singleton().screenSize!.x * 0.1 - 100,
+            position: Vector2(Singleton().screenSize!.x * 0.1 - 200,
                 Singleton().screenSize!.y - 140));
 
   double bulletTime = 0;
@@ -45,7 +45,9 @@ class Player extends RiveComponent
   void update(double dt) {
     super.update(dt);
 
-    print(playerController.isShooted);
+    if (playerController.isMoved == true) {
+      playerController.move();
+    }
 
     if (playerController.isShooted == true) {
       Bullet bullet = Bullet(rad: 2)

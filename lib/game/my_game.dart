@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame_game/components/player.dart';
@@ -56,7 +57,7 @@ class MyGame extends FlameGame
     }
   }
 
-  void _initializeGameStart() async {
+  void initializeGameStart() async {
     // 하단 중앙에 위치
     _enemyManager = EnemyManager();
     _itemManager = ItemManager();
@@ -79,13 +80,16 @@ class MyGame extends FlameGame
     });
 
     Player playerComponent = Player(playerArtboard: playerArtboard);
+    playerController.setPlayer(playerComponent);
     playerController.setPosition(playerComponent.x, playerComponent.y);
     playerController.rotate(3.14);
-    add(playerComponent);
+
+    playerComponent.position.x += 100;
+    add(playerController.playerComponent!);
   }
 
   void startGame() {
-    _initializeGameStart();
+    initializeGameStart();
     _gameManager.changeState(GameState.playing);
     overlays.remove('mainMenuOverlay');
   }
@@ -99,7 +103,21 @@ class MyGame extends FlameGame
       overlays.remove('mainMenuOverlay');
       resumeEngine();
       _gameManager.changeState(GameState.playing);
+    } else if (_gameManager.currentState == GameState.singOut) {
+      overlays.remove('mainMenuOverlay');
+      resumeEngine();
+      _gameManager.changeState(GameState.playing);
     }
+  }
+
+  void singOut() async {
+    await FirebaseAuth.instance.signOut();
+    overlays.remove('mainMenuOverlay');
+    overlays.add('mainMenuOverlay');
+    _enemyManager.destroy();
+    _itemManager.destroy();
+    _gameManager.reset();
+    _gameManager.changeState(GameState.singOut);
   }
 
   void gameOver({bool isLastBoss = false}) {
@@ -115,7 +133,7 @@ class MyGame extends FlameGame
 
   // 게임오버 이후 다시시작
   void reStartGame() {
-    _initializeGameStart();
+    initializeGameStart();
     _gameManager.changeState(GameState.playing);
     overlays.remove('gameOverOverlay');
   }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "739089643859",
+    "project_id": "swfact-summer-mini-project",
+    "storage_bucket": "swfact-summer-mini-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739089643859:android:4672c1027b3e5cd0dac9a6",
+        "android_client_info": {
+          "package_name": "com.example.flame_game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739089643859-adjma5gd8f5h9jepobb8nhbmcaqmf8pu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXU3EBMp5YEU3o-1YyauanwJY4_Kec4wE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739089643859-adjma5gd8f5h9jepobb8nhbmcaqmf8pu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

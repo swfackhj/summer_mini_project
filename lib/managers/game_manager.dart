@@ -2,7 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame_game/game/my_game.dart';
 import 'package:flutter/material.dart';
 
-enum GameState { intro, playing, pause, gameOver }
+enum GameState { intro, playing, pause, gameOver, singOut }
 
 class GameManager extends Component with HasGameRef<MyGame> {
   GameManager();

@@ -1,18 +1,27 @@
 import 'dart:math';
 
+import 'package:flame_game/components/player.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:rive/components.dart';
 import 'package:rive/rive.dart';
 
 class PlayerController extends GetxController {
+  Player? playerComponent;
   SMITrigger? fire;
   SMIBool? right;
   Node? node;
   double rotation = 0;
   bool firing = false;
   bool isShooted = false;
+  bool isMoved = false;
   double x = 0;
   double y = 0;
+  double beforeX = 0;
+
+  void setPlayer(Player playerComponent) {
+    this.playerComponent = playerComponent;
+    update();
+  }
 
   void playerInit(Artboard board) {
     final cont = StateMachineController.fromArtboard(board, 'State Machine 1',
@@ -76,8 +85,6 @@ class PlayerController extends GetxController {
   }
 
   void setPosition(double x, double y) {
-    print(x);
-    print(y);
     this.x = x;
     this.y = y;
     update();
@@ -89,6 +96,25 @@ class PlayerController extends GetxController {
 
   void setIsShooted(bool isShooted) {
     this.isShooted = isShooted;
+    update();
+  }
+
+  void setIsMoved(bool isMoved) {
+    this.isMoved = isMoved;
+    update();
+  }
+
+  void setBeforeX(double beforeX) {
+    this.beforeX = beforeX;
+  }
+
+  void move() {
+    if (playerComponent!.position.x - beforeX > 100) {
+      return;
+    }
+
+    playerComponent!.position.x += 1;
+
     update();
   }
 }
