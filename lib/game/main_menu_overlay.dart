@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame_game/components/email_section.dart';
 import 'package:flame_game/components/password_section.dart';
+import 'package:flame_game/controller/code_controller.dart';
 import 'package:flame_game/controller/user_controller.dart';
 import 'package:flame_game/game/my_game.dart';
 import 'package:flame_game/managers/game_manager.dart';
@@ -20,6 +21,7 @@ class MainMenuOverlay extends StatefulWidget {
 }
 
 class _MainMenuOverlayState extends State<MainMenuOverlay> {
+  final codeController = Get.find<CodeController>();
   final userController = Get.put(UserController());
   final widthSize = Get.context!.mediaQuerySize.width * 0.7;
   final heightSize = Get.context!.mediaQuerySize.height;
@@ -87,6 +89,8 @@ class _MainMenuOverlayState extends State<MainMenuOverlay> {
                             game.gameManager.currentState == GameState.pause
                                 ? ElevatedButton(
                                     onPressed: () async {
+                                      await codeController.dashboard
+                                          .removeAllElements();
                                       game.singOut();
                                     },
                                     child: const Text(
