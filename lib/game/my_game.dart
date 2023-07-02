@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame_game/components/player.dart';
 import 'package:flame_game/components/my_world.dart';
@@ -12,9 +11,9 @@ import 'package:flame_rive/flame_rive.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:rive/components.dart';
+import 'package:rive/rive.dart';
 
-class MyGame extends FlameGame
-    with HasTappableComponents, HasDraggableComponents, HasCollisionDetection {
+class MyGame extends FlameGame with HasCollisionDetection {
   late MyWorld _world;
   late Player _player;
   final GameManager _gameManager = GameManager();
@@ -59,9 +58,6 @@ class MyGame extends FlameGame
 
   void initializeGameStart() async {
     // 하단 중앙에 위치
-    _enemyManager = EnemyManager();
-    _itemManager = ItemManager();
-
     Artboard playerArtboard =
         await loadArtboard(RiveFile.asset('images/tank.riv'));
     final controller = StateMachineController.fromArtboard(
@@ -79,7 +75,10 @@ class MyGame extends FlameGame
           controller.findInput<bool>('facingRight') as SMIBool;
     });
 
-    Player playerComponent = Player(playerArtboard: playerArtboard);
+    Player playerComponent = Player(
+        playerArtboard: playerArtboard,
+        vector2: Vector2(Singleton().screenSize!.x * 0.1 - 200,
+            Singleton().screenSize!.y - 140));
     playerController.setBeforeX(playerComponent.x);
     playerController.setPlayer(playerComponent);
     playerController.setPosition(playerComponent.x, playerComponent.y);
@@ -87,6 +86,9 @@ class MyGame extends FlameGame
 
     playerComponent.position.x += 100;
     add(playerController.playerComponent!);
+
+    _enemyManager = EnemyManager();
+    _itemManager = ItemManager();
   }
 
   void startGame() {
@@ -120,7 +122,6 @@ class MyGame extends FlameGame
     overlays.remove('mainMenuOverlay');
     overlays.add('mainMenuOverlay');
     _gameManager.changeState(GameState.singOut);
-    print(_gameManager.currentState);
   }
 
   void gameOver({bool isLastBoss = false}) {
