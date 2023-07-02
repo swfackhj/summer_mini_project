@@ -2,15 +2,14 @@ import 'dart:math';
 
 import 'package:flame_game/components/player.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:rive/components.dart';
 import 'package:rive/rive.dart';
 
 class PlayerController extends GetxController {
   Player? playerComponent;
   SMITrigger? fire;
-  SMIBool? right;
-  Node? node;
-  double rotation = 0;
+  SMIBool? forward;
+  SMIBool? moving;
+  SMINumber? rot;
   bool firing = false;
   bool isShooted = false;
   bool isMoved = false;
@@ -21,6 +20,12 @@ class PlayerController extends GetxController {
   void setPlayer(Player playerComponent) {
     this.playerComponent = playerComponent;
     update();
+  }
+
+  void playerInit(Artboard board) {
+    final cont = StateMachineController.fromArtboard(board, 'State Machine 1',
+        onStateChange: onChange);
+    board.addController(cont!);
   }
 
   void shoot() async {
@@ -34,11 +39,6 @@ class PlayerController extends GetxController {
     update();
   }
 
-  void setValue(double val) {
-    node!.rotation = val;
-    update();
-  }
-
   void trigger() {
     fire?.value = true;
     Future.delayed(
@@ -47,23 +47,12 @@ class PlayerController extends GetxController {
   }
 
   void turn() {
-    right?.value = !right!.value;
+    forward?.value = !forward!.value;
     update();
   }
 
   void rotate(double rotation) {
-    this.rotation = rotation;
-    var val = rotation;
-    if (rotation > pi / 2) {
-      val = pi - rotation;
-      if (!right!.value) {
-        turn();
-      }
-    } else if (right!.value) {
-      turn();
-    }
-
-    setValue(val);
+    rot?.value = rotation;
     update();
   }
 
@@ -83,6 +72,8 @@ class PlayerController extends GetxController {
   }
 
   void setIsMoved(bool isMoved) {
+    moving?.value = true;
+    forward?.value = false;
     this.isMoved = isMoved;
     update();
   }
@@ -93,6 +84,7 @@ class PlayerController extends GetxController {
 
   void move() {
     if (playerComponent!.position.x - beforeX > 100) {
+      moving?.value = false;
       return;
     }
 

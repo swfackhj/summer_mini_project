@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flame_game/controller/player_controller.dart';
 import 'package:flame_game/flowChart/flutter_flow_chart.dart';
 import 'package:flame_game/flowChart/src/elements/value_condition_element.dart';
@@ -31,6 +29,12 @@ class CodeController extends GetxController {
       }
     );
 
+    dashboard.addElement(startElement);
+    dashboard.addElement(endElement);
+  }
+
+  void resetDashboard(){
+    dashboard.removeAllElements();
     dashboard.addElement(startElement);
     dashboard.addElement(endElement);
   }
@@ -100,7 +104,7 @@ class CodeController extends GetxController {
   void addRotateUp() {
     final ee = ActionElement(
         callback: (_) {
-          Get.find<PlayerController>().rotate(pi - pi / 4);
+          Get.find<PlayerController>().rotate(135);
         },
         text: 'Rotate Up');
     dashboard.addElement(ee);
