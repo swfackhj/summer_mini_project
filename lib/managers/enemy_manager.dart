@@ -52,34 +52,9 @@ class EnemyManager extends Component with HasGameRef<MyGame> {
     // 해당 level에 맞는 랜덤 enumy 추출
     late Enemy enemy;
     switch (level) {
-      case 1:
-        // level1에 해당되는 Enemy가 2개 라서 랜덤으로 생성
-        enemy = (_random.nextBool()) ? NormalEnemy01() : NormalEnemy02();
-        break;
-      case 2:
-        enemy = NormalEnemy02();
-        break;
-      case 3:
-        enemy = NormalEnemy03();
-        break;
-      case 4:
-        enemy = NormalEnemy04();
-        break;
-      case 5:
-        isBossDisplay = true;
-        enemy = BossEnemy();
-        break;
     }
 
     // Enemy 컴포넌트가 화면안에 유지 되도록 고정
-    position.clamp(
-      Vector2.zero() + enemy.size / 2,
-      gameRef.size - enemy.size / 2,
-    );
-
-    enemy.position = position;
-    enemy.anchor = Anchor.center;
-    gameRef.add(enemy);
   }
 
   void reset() {
