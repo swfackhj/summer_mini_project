@@ -158,7 +158,7 @@ class _MainMenuOverlayState extends State<MainMenuOverlay> {
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           GestureDetector(
-            onTap: () {
+            onTap: () async {
               userController.signInWithEmail(
                   userController.emailController.text,
                   userController.passwordController.text);
