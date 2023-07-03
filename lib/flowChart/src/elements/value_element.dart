@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'algorithm_flow.dart';
+import 'connection_params.dart';
 import 'data_element.dart';
 import 'flow_element.dart';
 
@@ -100,4 +101,31 @@ class ValueElement extends AlgorithmFlowElement{
 
   @override
   String? get nextFlow => null;
+
+  @override
+  Map<String, dynamic> toMap(){
+    return <String, dynamic>{
+      'type': 'Value',
+      'pos.x': position.dx,
+      'pos.y': position.dy,
+      'id': id,
+      'next': next.map((x)=> x.toMap()).toList(),
+      'valueKey': valueKey,
+    };
+  }
+
+  factory ValueElement.fromMap(Map<String, dynamic> map){
+    ValueElement e = ValueElement(
+      position: Offset(map['pos.x'] as double, map['pos.y'] as double),
+      valueKey: map['valueKey'] as String
+    );
+    e.setId(map['id'] as String);
+    e.next.addAll(List<ConnectionParams>.from(
+      (map['next'] as List<dynamic>).map<dynamic>(
+            (x) => ConnectionParams.fromMap(x as Map<String, dynamic>),
+      ),
+    ));
+
+    return e;
+  }
 }

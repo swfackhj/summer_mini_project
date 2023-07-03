@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame_game/controller/code_controller.dart';
 import 'package:flame_game/controller/code_ui_controller.dart';
 import 'package:flame_game/controller/player_controller.dart';
@@ -49,23 +50,25 @@ class CodingWidget extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 10,),
-                  ElevatedButton(onPressed: codeController.addFire, child: const Text('fire')),
+                  ElevatedButton(onPressed: ()=>codeController.addFire(), child: const Text('fire')),
                   const SizedBox(height: 10,),
-                  ElevatedButton(onPressed: codeController.addMoveRight, child: const Text('move right')),
+                  ElevatedButton(onPressed: ()=>codeController.addMoveRight(), child: const Text('move right')),
                   const SizedBox(height: 10,),
-                  ElevatedButton(onPressed: codeController.addRotateUp, child: const Text('rotate up')),
+                  ElevatedButton(onPressed: ()=>codeController.addRotateUp(), child: const Text('rotate up')),
                   const SizedBox(height: 10,),
-                  ElevatedButton(onPressed: codeController.addCanonValue, child: const Text('value')),
+                  ElevatedButton(onPressed: ()=>codeController.addRotateDown(), child: const Text('rotate down')),
                   const SizedBox(height: 10,),
-                  ElevatedButton(onPressed: codeController.addVal2, child: const Text('value2')),
+                  ElevatedButton(onPressed: ()=>codeController.addCanonValue(), child: const Text('value')),
                   const SizedBox(height: 10,),
-                  ElevatedButton(onPressed: codeController.addVal3, child: const Text('value3')),
+                  ElevatedButton(onPressed: ()=>codeController.addVal2(), child: const Text('value2')),
                   const SizedBox(height: 10,),
-                  ElevatedButton(onPressed: codeController.addValueCondition, child: const Text('condition')),
+                  ElevatedButton(onPressed: ()=>codeController.addVal3(), child: const Text('value3')),
                   const SizedBox(height: 10,),
-                  ElevatedButton(onPressed: codeController.addData, child: const Text('operation')),
+                  ElevatedButton(onPressed: ()=>codeController.addValueCondition(), child: const Text('condition')),
                   const SizedBox(height: 10,),
-                  ElevatedButton(onPressed: codeController.addPrint, child: const Text('print')),
+                  ElevatedButton(onPressed: ()=>codeController.addData(), child: const Text('operation')),
+                  const SizedBox(height: 10,),
+                  ElevatedButton(onPressed: ()=>codeController.addPrint(), child: const Text('print')),
                 ],
               ),
             ),
@@ -78,6 +81,30 @@ class CodingWidget extends StatelessWidget {
               backgroundColor: codeController.isRunning.value ? Colors.grey : Colors.blue,
               child: const Icon(Icons.play_arrow),
             )),
+          ),
+          Positioned(
+            bottom: 80,
+            left: 15,
+            child: Center(
+              child: FloatingActionButton(
+                onPressed: FirebaseAuth.instance.currentUser!=null ? (){
+                  codeController.saveDashBoard();
+                }: null,
+                child: const Icon(Icons.save),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 145,
+            left: 15,
+            child: Center(
+              child: FloatingActionButton(
+                onPressed: FirebaseAuth.instance.currentUser!=null ? (){
+                  codeController.loadDashBoard(FirebaseAuth.instance.currentUser!.uid);
+                }: null,
+                child: const Icon(Icons.download),
+              ),
+            ),
           )
         ],
       ),

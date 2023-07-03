@@ -17,6 +17,7 @@ class Bullet extends PositionComponent
   final controller = Get.put(PlayerController());
 
   Bullet({required this.rad}) {
+
     debugMode = true;
     var bulletsSprites = Flame.images.fromCache("Bomb.png");
     var bulletComponent = SpriteComponent.fromImage(bulletsSprites,
@@ -55,8 +56,8 @@ class Bullet extends PositionComponent
     super.update(dt);
     time += dt;
 
-    var xValue = 20 * cos(rad);
-    var yValue = 20 * sin(rad) - 9.8 * time;
+    var xValue = 30 * cos(rad);
+    var yValue = 30 * sin(rad) - 9.8 * time;
 
     position.x -= xValue * time;
     position.y -= (yValue * time - 0.5 * 9.8 * time * time);
