@@ -17,23 +17,19 @@ class CodeController extends GetxController {
   void onInit() {
     super.onInit();
 
-    endElement = EndElement(
-      callback: (_){
-        isRunning.value = false;
-      }
-    );
+    endElement = EndElement(callback: (_) {
+      isRunning.value = false;
+    });
 
-    startElement = StartElement(
-      callback: (_){
-        isRunning.value = true;
-      }
-    );
+    startElement = StartElement(callback: (_) {
+      isRunning.value = true;
+    });
 
     dashboard.addElement(startElement);
     dashboard.addElement(endElement);
   }
 
-  void resetDashboard(){
+  void resetDashboard() {
     dashboard.removeAllElements();
     dashboard.addElement(startElement);
     dashboard.addElement(endElement);
@@ -104,55 +100,46 @@ class CodeController extends GetxController {
   void addRotateUp() {
     final ee = ActionElement(
         callback: (_) {
-          Get.find<PlayerController>().rotate(135);
+          Get.find<PlayerController>().rotate(180);
         },
         text: 'Rotate Up');
     dashboard.addElement(ee);
   }
 
-  void addCanonValue(){
-    final ee = ValueElement(
-      valueKey: 'Canon'
-    );
+  void addCanonValue() {
+    final ee = ValueElement(valueKey: 'Canon');
     dashboard.addElement(ee);
   }
 
-  void addVal2(){
-    final ee = ValueElement(
-        valueKey: 'val2'
-    );
+  void addVal2() {
+    final ee = ValueElement(valueKey: 'val2');
     dashboard.addElement(ee);
   }
 
-  void addVal3(){
-    final ee = ValueElement(
-        valueKey: 'val3'
-    );
+  void addVal3() {
+    final ee = ValueElement(valueKey: 'val3');
     dashboard.addElement(ee);
   }
 
-  void addValueCondition(){
-    final ee = ValueConditionElement(
-      boolFunc: (valueKey){
-        DataRepository.getData(valueKey);
-        return true;
-      }
-    );
+  void addValueCondition() {
+    final ee = ValueConditionElement(boolFunc: (valueKey) {
+      DataRepository.getData(valueKey);
+      return true;
+    });
     dashboard.addElement(ee);
   }
 
-  void addData(){
+  void addData() {
     final ee = DataElement();
     dashboard.addElement(ee);
   }
 
-  void addPrint(){
+  void addPrint() {
     final ee = ValueActionElement(
-      text: 'print',
-      callback: (valueKey){
-        print(DataRepository.getData(valueKey));
-      }
-    );
+        text: 'print',
+        callback: (valueKey) {
+          print(DataRepository.getData(valueKey));
+        });
     dashboard.addElement(ee);
   }
 }

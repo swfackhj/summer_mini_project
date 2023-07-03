@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flame_game/components/player.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:rive/rive.dart';

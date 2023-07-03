@@ -1,10 +1,11 @@
+import 'dart:math';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame_game/components/bullet.dart';
 import 'package:flame_game/controller/player_controller.dart';
 import 'package:flame_game/game/my_game.dart';
-import 'package:flame_game/main.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:get/instance_manager.dart';
 import 'package:rive/rive.dart';
@@ -32,7 +33,6 @@ class Player extends RiveComponent
   @override
   void onMount() {
     super.onMount();
-
     final shape = CircleHitbox.relative(
       0.8,
       parentSize: size,
@@ -44,12 +44,6 @@ class Player extends RiveComponent
   }
 
   @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollision(intersectionPoints, other);
-    print(other);
-  }
-
-  @override
   void update(double dt) {
     super.update(dt);
 
@@ -58,15 +52,18 @@ class Player extends RiveComponent
     }
 
     if (playerController.isShooted == true) {
-      Bullet bullet = Bullet(rad: 1.85)
+      Bullet bullet = Bullet(rad: 2)
         // Bullet의 사이즈 설정
-        ..size = Vector2(0.0001, 0.0001)
+        ..size = Vector2(19, 25)
         // Bullet의 위치 설정
-        ..position = Vector2(
-            Singleton().screenSize!.x * 0.1, Singleton().screenSize!.y - 140)
+        ..position = position.clone()
+        ..x += 85 + 100 * cos(1)
+        ..y += 75 - 100 * sin(1)
         // Bullet의 기준점 설정
         ..anchor = Anchor.center;
       gameRef.add(bullet);
+      print(cos(180));
+      playerController.rotate(180 - 30);
       playerController.setIsShooted(false);
     }
   }
