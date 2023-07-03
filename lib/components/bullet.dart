@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
-import 'package:flame_game/components/player.dart';
+import 'package:flame_game/components/enemy.dart';
 import 'package:flame_game/controller/player_controller.dart';
 import 'package:flame_game/game/my_game.dart';
 import 'package:flame_game/main.dart';
@@ -32,11 +32,8 @@ class Bullet extends PositionComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
-    print(other);
-    if (other.runtimeType == Bullet) {
-      print('bullet');
-    } else if (other.runtimeType == Player) {
-      print('player');
+    if (other is Enemy) {
+      destroy();
     }
   }
 
