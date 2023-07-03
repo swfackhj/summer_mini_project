@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame_game/controller/player_controller.dart';
 import 'package:flame_game/flowChart/flutter_flow_chart.dart';
 import 'package:flame_game/flowChart/src/elements/value_condition_element.dart';
@@ -6,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CodeController extends GetxController {
-  final dashboard = Dashboard();
+  var dashboard = Dashboard();
 
   late StartElement startElement;
   late EndElement endElement;
@@ -80,89 +82,131 @@ class CodeController extends GetxController {
     }
   }
 
-  void addFire() {
+  void addFire({String? id}) {
     final ee = ActionElement(
-        callback: (_) async {
-          Get.find<PlayerController>().shoot();
-          await Future.delayed(const Duration(milliseconds: 500));
-        },
+        callback: functions['Fire'],
         text: 'Fire');
+    if(id!=null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addMoveRight() {
+  void addMoveRight({String? id}) {
     final ee = ActionElement(
-        callback: (_) async {
-          Get.find<PlayerController>().setBeforeX(
-              Get.find<PlayerController>().playerComponent!.position.x);
-          Get.find<PlayerController>().setIsMoved(true);
-          await Future.delayed(const Duration(seconds: 1));
-        },
+        callback: functions['Move Right'],
         text: 'Move Right');
+    if(id!=null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addRotateUp() {
+  void addRotateUp({String? id}) {
     final ee = ActionElement(
-        callback: (_) async {
-          await Get.find<PlayerController>().rotate(135);
-        },
+        callback: functions['Rotate Up'],
         text: 'Rotate Up');
+    if(id!=null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addRotateDown() {
+  void addRotateDown({String? id}) {
     final ee = ActionElement(
-        callback: (_) {
-          Get.find<PlayerController>().rotate(180);
-        },
+        callback: functions['Rotate Down'],
         text: 'Rotate Down');
+    if(id!=null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addCanonValue(){
+  void addCanonValue({String? id}){
     final ee = ValueElement(
       valueKey: 'Canon'
     );
+    if(id!=null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addVal2(){
+  void addVal2({String? id}){
     final ee = ValueElement(
         valueKey: 'val2'
     );
+    if(id!=null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addVal3(){
+  void addVal3({String? id}){
     final ee = ValueElement(
         valueKey: 'val3'
     );
+    if(id!=null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addValueCondition(){
+  void addValueCondition({String? id}){
     final ee = ValueConditionElement(
       // boolFunc: (valueKey1, valueKey2){
       //   DataRepository.getData(valueKey);
       //   return true;
       // }
     );
+    if(id!=null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addData(){
+  void addData({String? id}){
     final ee = DataElement();
+    if(id!=null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addPrint(){
+  void addPrint({String? id}){
     final ee = ValueActionElement(
       text: 'print',
-      callback: (valueKey){
-        print(DataRepository.getData(valueKey));
-      }
+      callback: functions['print']
     );
+    if(id!=null) ee.setId(id);
     dashboard.addElement(ee);
+  }
+
+  static Map<String,dynamic Function(dynamic)> functions = {
+    'Fire': (_) async {
+      Get.find<PlayerController>().shoot();
+      await Future.delayed(const Duration(milliseconds: 500));
+    },
+    'Move Right': (_) async {
+      Get.find<PlayerController>().setBeforeX(
+          Get.find<PlayerController>().playerComponent!.position.x);
+      Get.find<PlayerController>().setIsMoved(true);
+      await Future.delayed(const Duration(seconds: 1));
+    },
+    'Rotate Up': (_) async {
+      await Get.find<PlayerController>().rotate(135);
+    },
+    'Rotate Down': (_) async {
+      await Get.find<PlayerController>().rotate(180);
+    },
+    'print': (valueKey){
+      print(DataRepository.getData(valueKey));
+    }
+  };
+  
+  void loadDashBoard(String id){
+    FirebaseFirestore.instance.collection('dashboard').doc(id).get().then(
+      (x){
+        if(x.data()!=null) {
+          dashboard.removeAllElements();
+          dashboard.elements = Dashboard.algorFromMap(x.data()!);
+          dashboard.update();
+
+          startElement = dashboard.elements.singleWhere((element) => element.text=='Start') as StartElement;
+          startElement.callback = (_){isRunning.value = true;};
+          endElement = dashboard.elements.singleWhere((element) => element.text=='End') as EndElement;
+          endElement.callback = (_){isRunning.value = false;};
+        }
+      },
+    );
+  }
+
+  void saveDashBoard(){
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    FirebaseFirestore.instance.collection('dashboard').doc(userId).set(
+      dashboard.toMap()
+    );
   }
 }

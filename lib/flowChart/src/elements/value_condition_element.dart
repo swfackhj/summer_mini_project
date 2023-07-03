@@ -128,4 +128,37 @@ class ValueConditionElement extends ConditionElement{
       ],
     );
   }
+
+  @override
+  Map<String, dynamic> toMap(){
+    return <String, dynamic>{
+      'type': 'ValueCondition',
+      'pos.x': position.dx,
+      'pos.y': position.dy,
+      'text': text,
+      'id': id,
+      'next': next.map((x)=> x.toMap()).toList(),
+      'valueKey1': valueKey1,
+      'valueKey2': valueKey2,
+      'comparator': comparator.name
+    };
+  }
+
+  factory ValueConditionElement.fromMap(Map<String, dynamic> map){
+    ValueConditionElement e = ValueConditionElement(
+      position: Offset(map['pos.x'] as double, map['pos.y'] as double),
+      text: map['text'] as String
+    );
+    e.setId(map['id']);
+    e.next.addAll(List<ConnectionParams>.from(
+      (map['next'] as List<dynamic>).map<dynamic>(
+            (x) => ConnectionParams.fromMap(x as Map<String, dynamic>),
+      ),
+    ));
+    e.valueKey1 = map['valueKey1'] as String;
+    e.valueKey2 = map['valueKey2'] as String;
+    e.comparator = Comparison.values.singleWhere((element) => element.name == map['comparator'] as String);
+
+    return e;
+  }
 }

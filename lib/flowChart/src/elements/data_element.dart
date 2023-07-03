@@ -125,6 +125,31 @@ class DataElement extends AlgorithmFlowElement{
     final res = next.where((element) => element.arrowParams.startArrowPosition == Alignment.centerLeft);
     return res.isNotEmpty ? res.first.destElementId : null;
   }
+
+  @override
+  Map<String, dynamic> toMap(){
+    return <String, dynamic>{
+      'type': 'Data',
+      'pos.x': position.dx,
+      'pos.y': position.dy,
+      'id': id,
+      'next': next.map((x)=> x.toMap()).toList(),
+      'operand1': operand1,
+      'operand2': operand2,
+      'operation': operation.name,
+    };
+  }
+
+  factory DataElement.fromMap(Map<String, dynamic>map){
+    DataElement e = DataElement(
+      position: Offset(map['pos.x'] as double, map['pos.y'] as double),
+    );
+    e.setId(map['id']);
+    e.operand1 = map['operand1'] as String;
+    e.operand2 = map['operand2'] as String;
+    e.operation = Operation.values.singleWhere((element) => element.name==map['operation'] as String);
+    return e;
+  }
 }
 
 class DataRepository {

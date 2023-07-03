@@ -2,6 +2,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flame_game/flowChart/flutter_flow_chart.dart';
+import 'package:flame_game/flowChart/src/elements/value_condition_element.dart';
+import 'package:flame_game/flowChart/src/elements/value_element.dart';
 import 'package:flutter/widgets.dart';
 import 'package:uuid/uuid.dart';
 
@@ -199,6 +202,35 @@ class Dashboard extends ChangeNotifier {
     return <String, dynamic>{
       'elements': elements.map((x) => x.toMap()).toList(),
     };
+  }
+
+  static List<AlgorithmFlowElement> algorFromMap(Map<String, dynamic> map){
+    return List<AlgorithmFlowElement>.from(
+      (map['elements'] as List<dynamic>).map<AlgorithmFlowElement>(
+        (x){
+          final map = x as Map<String,dynamic>;
+          switch(map['type'] as String){
+            case 'Action':
+              return ActionElement.fromMap(map);
+            case 'Condition':
+              return ConditionElement.fromMap(map);
+            case 'Data':
+              return DataElement.fromMap(map);
+            case 'Start':
+              return StartElement.fromMap(map);
+            case 'End':
+              return EndElement.fromMap(map);
+            case 'ValueAction':
+              return ValueActionElement.fromMap(map);
+            case 'ValueCondition':
+              return ValueConditionElement.fromMap(map);
+            case 'Value':
+            default:
+              return ValueElement.fromMap(map);
+          }
+        },
+      ),
+    );
   }
 
   factory Dashboard.fromMap(Map<String, dynamic> map) {
