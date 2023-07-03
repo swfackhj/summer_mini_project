@@ -252,14 +252,14 @@ packages:
       name: flame
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.0"
+    version: "1.7.3"
   flame_rive:
     dependency: "direct main"
     description:
       name: flame_rive
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.0"
+    version: "1.0.0-releasecandidate.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -421,7 +421,7 @@ packages:
       name: ordered_set
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.0"
+    version: "5.0.1"
   package_config:
     dependency: transitive
     description:
@@ -470,7 +470,7 @@ packages:
       name: rive
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.1"
+    version: "0.7.33"
   shelf:
     dependency: transitive
     description:

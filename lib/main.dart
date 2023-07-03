@@ -28,6 +28,7 @@ void main() async {
     "Background_Grid.png",
     "Player.png",
     "Bullets.png",
+    "Bomb.png",
     "Boom.png",
     "Items.png",
   ]);

@@ -67,7 +67,6 @@ class UserController extends GetxController {
         case 'weak-password':
           return signUpErrorDialog('비밀번호 형식이 잘못되었습니다.');
         default:
-          print(error.code);
       }
     }
   }

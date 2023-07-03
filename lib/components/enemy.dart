@@ -8,9 +8,6 @@ import 'package:flame_game/game/my_game.dart';
 import 'package:flame_game/models/enemy_model.dart';
 import 'package:flutter/material.dart';
 
-import 'bullet.dart';
-import 'player.dart';
-
 abstract class Enemy extends SpriteGroupComponent
     with CollisionCallbacks, HasGameRef<MyGame> {
   final _random = Random();
@@ -79,19 +76,6 @@ abstract class Enemy extends SpriteGroupComponent
     else if ((position.x < size.x / 2) ||
         (position.x > (gameRef.size.x - size.x / 2))) {
       _moveDirection.x *= -1;
-    }
-  }
-
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollision(intersectionPoints, other);
-
-    // Bullet과 충돌시
-    if (other is Bullet) {
-      // hp 감소처리
-      _hitPoints -= gameRef.gameManager.bulletPowerPoint;
-      // 총알에 맞았을때 Sprite 변경
-      current = 2;
     }
   }
 
