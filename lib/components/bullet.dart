@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
-import 'package:flame_game/components/player.dart';
+import 'package:flame_game/components/enemy.dart';
 import 'package:flame_game/controller/player_controller.dart';
 import 'package:flame_game/game/my_game.dart';
 import 'package:flame_game/main.dart';
@@ -12,12 +12,11 @@ import 'package:get/get.dart';
 class Bullet extends PositionComponent
     with CollisionCallbacks, HasGameRef<MyGame> {
   double time = 0;
-  double rad;
+  bool isHit = false;
 
-  final controller = Get.put(PlayerController());
+  final playerController = Get.put(PlayerController());
 
-  Bullet({required this.rad}) {
-
+  Bullet() {
     debugMode = true;
     var bulletsSprites = Flame.images.fromCache("Bomb.png");
     var bulletComponent = SpriteComponent.fromImage(bulletsSprites,
@@ -29,14 +28,14 @@ class Bullet extends PositionComponent
 
     add(bulletComponent);
   }
+
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
-    print(other);
-    if (other.runtimeType == Bullet) {
-      print('bullet');
-    } else if (other.runtimeType == Player) {
-      print('player');
+
+    if (other is Enemy) {
+      isHit = true;
+      destroy();
     }
   }
 
@@ -57,16 +56,17 @@ class Bullet extends PositionComponent
   @override
   void update(double dt) {
     super.update(dt);
-    time += dt;
+    time += dt * 5;
+    const radians = 60 * pi / 180;
+    var xValue = 15 * cos(radians);
+    var yValue = 15 * sin(radians);
 
-    var xValue = 30 * cos(rad);
-    var yValue = 30 * sin(rad) - 9.8 * time;
-
-    position.x -= xValue * time;
-    position.y -= (yValue * time - 0.5 * 9.8 * time * time);
+    position.x += xValue * time;
+    position.y += -1 * yValue * time + 9.81 * time * time / 2;
 
     // 스크린 범위 밖으로 나가면 객체 제거
     if (position.y > Singleton().screenSize!.y) {
+      print(position);
       removeFromParent();
     }
   }

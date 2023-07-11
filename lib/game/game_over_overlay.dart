@@ -46,9 +46,9 @@ class _GameOverOverlayState extends State<GameOverOverlay> {
                                 game.reStartGame();
                               }
                             },
-                            child: Text(
+                            child: const Text(
                               '다시하기',
-                              style: const TextStyle(fontSize: 15),
+                              style: TextStyle(fontSize: 15),
                             )),
                       ],
                     ),

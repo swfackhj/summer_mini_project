@@ -3,8 +3,6 @@ import 'package:flame/components.dart';
 import 'package:flame_game/components/item.dart';
 import 'package:flame_game/game/my_game.dart';
 
-final Random _rand = Random();
-
 class ItemManager extends Component with HasGameRef<MyGame> {
   late Timer _itemTimer;
   final Random _random = Random();

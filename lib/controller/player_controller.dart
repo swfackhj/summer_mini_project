@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flame_game/components/player.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:rive/rive.dart';
@@ -9,7 +7,7 @@ class PlayerController extends GetxController {
   SMITrigger? fire;
   SMIBool? forward;
   SMIBool? moving;
-  SMINumber? rot;
+  SMINumber? angle;
   bool firing = false;
   bool isShooted = false;
   bool isMoved = false;
@@ -52,9 +50,9 @@ class PlayerController extends GetxController {
   }
 
   Future<void> rotate(double rotation) async {
-    final step = (rotation-rot!.value)/50.0;
-    for(int i = 0; i<50; i++){
-      rot!.value = rot!.value+step;
+    final step = (rotation - angle!.value) / 50.0;
+    for (int i = 0; i < 50; i++) {
+      angle!.value = angle!.value + step;
       await Future.delayed(const Duration(milliseconds: 10));
     }
     update();

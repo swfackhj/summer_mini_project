@@ -8,12 +8,6 @@ import 'package:flame_game/flowChart/src/elements/value_element.dart';
 import 'package:flutter/widgets.dart';
 import 'package:uuid/uuid.dart';
 
-import 'elements/algorithm_flow.dart';
-import 'elements/connection_params.dart';
-import 'ui/draw_arrow.dart';
-import 'elements/flow_element.dart';
-import 'ui/grid_background.dart';
-
 /// Class to store all the scene elements.
 /// It notifies changes to [FlowChart]
 class Dashboard extends ChangeNotifier {
@@ -30,12 +24,12 @@ class Dashboard extends ChangeNotifier {
         handlerFeedbackOffset = Offset.zero,
         gridBackgroundParams = const GridBackgroundParams();
 
-  List<AlgorithmFlowElement> getNextOf(AlgorithmFlowElement element){
+  List<AlgorithmFlowElement> getNextOf(AlgorithmFlowElement element) {
     var toReturn = <AlgorithmFlowElement>[];
 
-    if(elements.contains(element)){
-      final e = findElementById(element.nextFlow??'');
-      if(e!=null) {
+    if (elements.contains(element)) {
+      final e = findElementById(element.nextFlow ?? '');
+      if (e != null) {
         toReturn.add(e as AlgorithmFlowElement);
       }
     }
@@ -43,9 +37,9 @@ class Dashboard extends ChangeNotifier {
     return toReturn;
   }
 
-  FlowElement? findElementById(String id){
+  FlowElement? findElementById(String id) {
     final e = elements.where((element) => element.id == id);
-    return e.isNotEmpty? e.first : null;
+    return e.isNotEmpty ? e.first : null;
   }
 
   /// set grid background parameters
@@ -204,12 +198,12 @@ class Dashboard extends ChangeNotifier {
     };
   }
 
-  static List<AlgorithmFlowElement> algorFromMap(Map<String, dynamic> map){
+  static List<AlgorithmFlowElement> algorFromMap(Map<String, dynamic> map) {
     return List<AlgorithmFlowElement>.from(
       (map['elements'] as List<dynamic>).map<AlgorithmFlowElement>(
-        (x){
-          final map = x as Map<String,dynamic>;
-          switch(map['type'] as String){
+        (x) {
+          final map = x as Map<String, dynamic>;
+          switch (map['type'] as String) {
             case 'Action':
               return ActionElement.fromMap(map);
             case 'Condition':
@@ -279,7 +273,7 @@ class Dashboard extends ChangeNotifier {
     }
   }
 
-  void update(){
+  void update() {
     notifyListeners();
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flame/game.dart';
 import 'package:flame_game/controller/player_controller.dart';
 import 'package:flame_game/game/my_game.dart';
-import 'package:flame_game/game/score_display.dart';
 import 'package:flame_game/managers/game_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
@@ -29,7 +28,6 @@ class _GameOverlayState extends State<GameOverlay> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ScoreDisplay(game: widget.game),
               ElevatedButton(
                 onPressed: () async {
                   (widget.game as MyGame).pauseAndresumeGame();
