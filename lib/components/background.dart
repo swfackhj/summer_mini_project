@@ -11,7 +11,6 @@ class Background extends PositionComponent {
   Background(Image spriteImg, Vector2 postion) {
     _background =
         BackgroundComponent(spriteImg, Vector2(0, 0), spriteImg.size, postion);
-
     add(_background);
   }
 

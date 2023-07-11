@@ -1,19 +1,14 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame/experimental.dart';
-import 'package:flame_game/controller/player_controller.dart';
+import 'package:flame_game/components/bullet.dart';
 import 'package:flame_game/game/my_game.dart';
 import 'package:flame_rive/flame_rive.dart';
-import 'package:get/instance_manager.dart';
 import 'package:rive/rive.dart';
 
-class Enemy extends RiveComponent
-    with DragCallbacks, CollisionCallbacks, HasGameRef<MyGame> {
+class Enemy extends RiveComponent with CollisionCallbacks, HasGameRef<MyGame> {
   final Artboard enemyArtboard;
   Vector2 vector2;
   late final RiveComponent _playerComponent;
-
-  final playerController = Get.put(PlayerController());
 
   Enemy({required this.enemyArtboard, required this.vector2})
       : super(
@@ -37,6 +32,14 @@ class Enemy extends RiveComponent
     );
 
     add(shape);
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
+    if (other is Bullet) {
+      print('hitted');
+    }
   }
 
   void setPosition(Vector2 position) {

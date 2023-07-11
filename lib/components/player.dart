@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
-import 'package:flame_game/components/bomb.dart';
+import 'package:flame_game/components/bullet.dart';
 import 'package:flame_game/controller/player_controller.dart';
 import 'package:flame_game/game/my_game.dart';
 import 'package:flame_rive/flame_rive.dart';
@@ -33,7 +33,6 @@ class Player extends RiveComponent
   @override
   void onMount() {
     super.onMount();
-
     final shape = CircleHitbox.relative(
       0.8,
       parentSize: size,
@@ -53,14 +52,19 @@ class Player extends RiveComponent
     }
 
     if (playerController.isShooted == true) {
-      Bomb bomb = Bomb()
+      final rad = dt / 180 * pi;
+      Bullet bullet = Bullet()
+        // Bullet의 사이즈 설정
+        ..size = Vector2(19, 25)
+        // Bullet의 위치 설정
         ..position = Vector2(
-            position.x +
-                85 +
-                70 * cos(180 - playerController.angle!.value) +
-                10,
-            position.y + 85 - 70 * sin(180 - playerController.angle!.value));
-      gameRef.add(bomb);
+            playerController.playerComponent!.x + 175 * cos(rad),
+            playerController.playerComponent!.y + 80 - 350 * sin(rad))
+        // Bullet의 기준점 설정
+        ..anchor = Anchor.center;
+      gameRef.add(bullet);
+      print(cos(180));
+      playerController.rotate(180 - 30);
       playerController.setIsShooted(false);
     }
   }

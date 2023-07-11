@@ -1,12 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/game.dart';
-import 'package:flame_game/components/enemy.dart';
 import 'package:flame_game/components/player.dart';
 import 'package:flame_game/components/my_world.dart';
 import 'package:flame_game/controller/player_controller.dart';
 import 'package:flame_game/main.dart';
 import 'package:flame_game/managers/game_manager.dart';
-import 'package:flame_game/managers/item_manager.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
@@ -16,7 +14,6 @@ class MyGame extends FlameGame with HasCollisionDetection {
   late MyWorld _world;
   late Player _player;
   final GameManager _gameManager = GameManager();
-  late ItemManager _itemManager;
 
   MyGame();
 
@@ -71,8 +68,8 @@ class MyGame extends FlameGame with HasCollisionDetection {
 
     Player playerComponent = Player(
         playerArtboard: playerArtboard,
-        vector2: Vector2(Singleton().screenSize!.x * 0.1 - 200,
-            Singleton().screenSize!.y - 140));
+        vector2: Vector2(Singleton().screenSize!.x * 0.1 - 100,
+            Singleton().screenSize!.y - 210));
     playerController.setBeforeX(playerComponent.x);
     playerController.setPlayer(playerComponent);
     playerController.setPosition(playerComponent.x, playerComponent.y);
@@ -83,13 +80,6 @@ class MyGame extends FlameGame with HasCollisionDetection {
     playerComponent.position.x += 100;
     add(playerController.playerComponent!);
 
-    Enemy enemy = Enemy(
-        enemyArtboard: playerArtboard,
-        vector2: Vector2(Singleton().screenSize!.x * 0.9 - 200,
-            Singleton().screenSize!.y - 140));
-    add(enemy);
-
-    _itemManager = ItemManager();
   }
 
   void startGame() {
@@ -117,7 +107,11 @@ class MyGame extends FlameGame with HasCollisionDetection {
   void singOut() async {
     await FirebaseAuth.instance.signOut();
     playerController.playerComponent!.destroy();
+<<<<<<< HEAD
     _itemManager.destroy();
+=======
+    _enemyManager.destroy();
+>>>>>>> main
     _gameManager.reset();
     overlays.remove('mainMenuOverlay');
     overlays.add('mainMenuOverlay');
@@ -128,7 +122,6 @@ class MyGame extends FlameGame with HasCollisionDetection {
     if (isLastBoss) {
       _player.removeFromParent();
     }
-    _itemManager.destroy();
     _gameManager.reset();
     _gameManager.changeState(GameState.gameOver);
     overlays.add('gameOverOverlay');

@@ -32,9 +32,7 @@ class Bullet extends PositionComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
-
     if (other is Enemy) {
-      isHit = true;
       destroy();
     }
   }
