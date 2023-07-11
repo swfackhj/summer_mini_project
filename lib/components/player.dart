@@ -53,7 +53,7 @@ class Player extends RiveComponent
 
     if (playerController.isShooted == true) {
       final rad = dt / 180 * pi;
-      Bullet bullet = Bullet(rad: 1.85)
+      Bullet bullet = Bullet()
         // Bullet의 사이즈 설정
         ..size = Vector2(19, 25)
         // Bullet의 위치 설정

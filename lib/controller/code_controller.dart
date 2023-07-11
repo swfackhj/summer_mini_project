@@ -19,23 +19,19 @@ class CodeController extends GetxController {
   void onInit() {
     super.onInit();
 
-    endElement = EndElement(
-      callback: (_){
-        isRunning.value = false;
-      }
-    );
+    endElement = EndElement(callback: (_) {
+      isRunning.value = false;
+    });
 
-    startElement = StartElement(
-      callback: (_){
-        isRunning.value = true;
-      }
-    );
+    startElement = StartElement(callback: (_) {
+      isRunning.value = true;
+    });
 
     dashboard.addElement(startElement);
     dashboard.addElement(endElement);
   }
 
-  void resetDashboard(){
+  void resetDashboard() {
     dashboard.removeAllElements();
     dashboard.addElement(startElement);
     dashboard.addElement(endElement);
@@ -83,130 +79,125 @@ class CodeController extends GetxController {
   }
 
   void addFire({String? id}) {
-    final ee = ActionElement(
-        callback: functions['Fire'],
-        text: 'Fire');
-    if(id!=null) ee.setId(id);
+    final ee = ActionElement(callback: functions['Fire'], text: 'Fire');
+    if (id != null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
   void addMoveRight({String? id}) {
-    final ee = ActionElement(
-        callback: functions['Move Right'],
-        text: 'Move Right');
-    if(id!=null) ee.setId(id);
+    final ee =
+        ActionElement(callback: functions['Move Right'], text: 'Move Right');
+    if (id != null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
   void addRotateUp({String? id}) {
-    final ee = ActionElement(
-        callback: functions['Rotate Up'],
-        text: 'Rotate Up');
-    if(id!=null) ee.setId(id);
+    final ee =
+        ActionElement(callback: functions['Rotate Up'], text: 'Rotate Up');
+    if (id != null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
   void addRotateDown({String? id}) {
-    final ee = ActionElement(
-        callback: functions['Rotate Down'],
-        text: 'Rotate Down');
-    if(id!=null) ee.setId(id);
+    final ee =
+        ActionElement(callback: functions['Rotate Down'], text: 'Rotate Down');
+    if (id != null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addCanonValue({String? id}){
-    final ee = ValueElement(
-      valueKey: 'Canon'
-    );
-    if(id!=null) ee.setId(id);
+  void addCanonValue({String? id}) {
+    final ee = ValueElement(valueKey: 'Canon');
+    if (id != null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addVal2({String? id}){
-    final ee = ValueElement(
-        valueKey: 'val2'
-    );
-    if(id!=null) ee.setId(id);
+  void addVal2({String? id}) {
+    final ee = ValueElement(valueKey: 'val2');
+    if (id != null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addVal3({String? id}){
-    final ee = ValueElement(
-        valueKey: 'val3'
-    );
-    if(id!=null) ee.setId(id);
+  void addVal3({String? id}) {
+    final ee = ValueElement(valueKey: 'val3');
+    if (id != null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addValueCondition({String? id}){
+  void addValueCondition({String? id}) {
     final ee = ValueConditionElement(
-      // boolFunc: (valueKey1, valueKey2){
-      //   DataRepository.getData(valueKey);
-      //   return true;
-      // }
-    );
-    if(id!=null) ee.setId(id);
+        // boolFunc: (valueKey1, valueKey2){
+        //   DataRepository.getData(valueKey);
+        //   return true;
+        // }
+        );
+    if (id != null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addData({String? id}){
+  void addData({String? id}) {
     final ee = DataElement();
-    if(id!=null) ee.setId(id);
+    if (id != null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  void addPrint({String? id}){
-    final ee = ValueActionElement(
-      text: 'print',
-      callback: functions['print']
-    );
-    if(id!=null) ee.setId(id);
+  void addPrint({String? id}) {
+    final ee = ValueActionElement(text: 'print', callback: functions['print']);
+    if (id != null) ee.setId(id);
     dashboard.addElement(ee);
   }
 
-  static Map<String,dynamic Function(dynamic)> functions = {
+  static Map<String, dynamic Function(dynamic)> functions = {
     'Fire': (_) async {
       Get.find<PlayerController>().shoot();
       await Future.delayed(const Duration(milliseconds: 500));
     },
     'Move Right': (_) async {
-      Get.find<PlayerController>().setBeforeX(
-          Get.find<PlayerController>().playerComponent!.position.x);
+      Get.find<PlayerController>()
+          .setBeforeX(Get.find<PlayerController>().playerComponent!.position.x);
       Get.find<PlayerController>().setIsMoved(true);
       await Future.delayed(const Duration(seconds: 1));
     },
     'Rotate Up': (_) async {
-      await Get.find<PlayerController>().rotate(135);
+      final playerController = Get.find<PlayerController>();
+      await playerController.rotate(110);
     },
     'Rotate Down': (_) async {
       await Get.find<PlayerController>().rotate(180);
     },
-    'print': (valueKey){
+    'print': (valueKey) {
       print(DataRepository.getData(valueKey));
     }
   };
-  
-  void loadDashBoard(String id){
+
+  void loadDashBoard(String id) {
     FirebaseFirestore.instance.collection('dashboard').doc(id).get().then(
-      (x){
-        if(x.data()!=null) {
+      (x) {
+        if (x.data() != null) {
           dashboard.removeAllElements();
           dashboard.elements = Dashboard.algorFromMap(x.data()!);
           dashboard.update();
 
-          startElement = dashboard.elements.singleWhere((element) => element.text=='Start') as StartElement;
-          startElement.callback = (_){isRunning.value = true;};
-          endElement = dashboard.elements.singleWhere((element) => element.text=='End') as EndElement;
-          endElement.callback = (_){isRunning.value = false;};
+          startElement = dashboard.elements
+                  .singleWhere((element) => element.text == 'Start')
+              as StartElement;
+          startElement.callback = (_) {
+            isRunning.value = true;
+          };
+          endElement = dashboard.elements
+              .singleWhere((element) => element.text == 'End') as EndElement;
+          endElement.callback = (_) {
+            isRunning.value = false;
+          };
         }
       },
     );
   }
 
-  void saveDashBoard(){
+  void saveDashBoard() {
     final userId = FirebaseAuth.instance.currentUser!.uid;
-    FirebaseFirestore.instance.collection('dashboard').doc(userId).set(
-      dashboard.toMap()
-    );
+    FirebaseFirestore.instance
+        .collection('dashboard')
+        .doc(userId)
+        .set(dashboard.toMap());
   }
 }

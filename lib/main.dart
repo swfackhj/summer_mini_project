@@ -8,6 +8,7 @@ import 'package:flame_game/game/game_overlay.dart';
 import 'package:flame_game/game/main_menu_overlay.dart';
 import 'package:flame_game/game/my_game.dart';
 import 'package:flutter/material.dart';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:js' as js;
 
 import 'package:get/route_manager.dart';

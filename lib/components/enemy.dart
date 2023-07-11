@@ -25,8 +25,8 @@ class Enemy extends RiveComponent with CollisionCallbacks, HasGameRef<MyGame> {
     super.onMount();
 
     final shape = CircleHitbox.relative(
-      0.8,
-      parentSize: size,
+      0.4,
+      parentSize: size / 2,
       position: size / 2,
       anchor: Anchor.center,
     );

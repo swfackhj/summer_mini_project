@@ -4,7 +4,6 @@ import 'package:flame_game/components/player.dart';
 import 'package:flame_game/components/my_world.dart';
 import 'package:flame_game/controller/player_controller.dart';
 import 'package:flame_game/main.dart';
-import 'package:flame_game/managers/enemy_manager.dart';
 import 'package:flame_game/managers/game_manager.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -15,7 +14,6 @@ class MyGame extends FlameGame with HasCollisionDetection {
   late MyWorld _world;
   late Player _player;
   final GameManager _gameManager = GameManager();
-  late EnemyManager _enemyManager;
 
   MyGame();
 
@@ -65,7 +63,7 @@ class MyGame extends FlameGame with HasCollisionDetection {
     playerController.fire = controller.findInput<bool>('fire') as SMITrigger;
     playerController.forward = controller.findInput<bool>('forward') as SMIBool;
     playerController.moving = controller.findInput<bool>('moving') as SMIBool;
-    playerController.rot =
+    playerController.angle =
         controller.findInput<double>('rotation') as SMINumber;
 
     Player playerComponent = Player(
@@ -82,7 +80,6 @@ class MyGame extends FlameGame with HasCollisionDetection {
     playerComponent.position.x += 100;
     add(playerController.playerComponent!);
 
-    _enemyManager = EnemyManager();
   }
 
   void startGame() {
@@ -110,7 +107,11 @@ class MyGame extends FlameGame with HasCollisionDetection {
   void singOut() async {
     await FirebaseAuth.instance.signOut();
     playerController.playerComponent!.destroy();
+<<<<<<< HEAD
+    _itemManager.destroy();
+=======
     _enemyManager.destroy();
+>>>>>>> main
     _gameManager.reset();
     overlays.remove('mainMenuOverlay');
     overlays.add('mainMenuOverlay');
@@ -121,7 +122,6 @@ class MyGame extends FlameGame with HasCollisionDetection {
     if (isLastBoss) {
       _player.removeFromParent();
     }
-    _enemyManager.destroy();
     _gameManager.reset();
     _gameManager.changeState(GameState.gameOver);
     overlays.add('gameOverOverlay');
